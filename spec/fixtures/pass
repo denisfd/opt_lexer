@@ -1,0 +1,10 @@
+PROGRAM pr1g;
+VAR A:INTEGER; B:FLOAT; C:1..5; D:INTEGER;
+BEGIN
+  LOOP
+    D := 345;
+    A := C[3];
+  ENDLOOP;
+  A := C[D];
+END
+.
