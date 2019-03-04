@@ -9,9 +9,11 @@ class LexerCommand < Clamp::Command
   option ['-f', '--file'], 'filename', 'Input File', required: true
 
   def execute
-    parser = Lexical::Lexer.new
+    parser = Lexical.create({
+      casesensetive: false,
+    })
 
-    parser.parse_file(file)
+    parser.scan_file(file)
 
     parser.report
   end
