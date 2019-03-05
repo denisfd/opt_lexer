@@ -1,9 +1,13 @@
 module Lexical
   class Lexer
+    attr_reader :infotable
+
     def initialize(infotable, params)
       @infotable = infotable
       @config = params
       @comment = false
+      @comment_line = 0
+      @comment_column = 0
     end
 
     def scan_file(file_name)
@@ -16,6 +20,9 @@ module Lexical
       text.each_line.with_index do |line, index|
         line = line.rstrip + ' '
         tokenize_line(line, index)
+      end
+      if @comment
+        @infotable.add_error(Error.new(@comment_line, @comment_column, 'Comment opened but not closed'))
       end
     end
 
@@ -31,7 +38,11 @@ module Lexical
           end
         else
           if line[i] == '(' && line[i + 1] == '*'
+            @infotable.recognize(token, index, i - token.length)
+            token = ''
             @comment = true
+            @comment_line = index + 1
+            @comment_column = i + 1
             i += 1
           elsif line[i] == ' '
             @infotable.recognize(token, index, i - token.length)

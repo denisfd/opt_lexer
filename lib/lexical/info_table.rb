@@ -1,7 +1,7 @@
-require_relative 'lexeme'
-
 module Lexical
   class InfoTable
+    attr_reader :symbols, :keywords, :identifiers, :constants, :lexems, :errors
+
     def initialize
       @symbols = {}
       @symbol_code = 50
@@ -54,7 +54,7 @@ module Lexical
       while i < model.length
         char = model[i]
         unless symbs.include?(char) || digits.include?(char)
-          add_error("#{line}, #{column}, illegal symbol: #{char}")
+          add_error(Error.new(line, column, "illegal symbol: #{char}"))
           return false
         end
 
@@ -71,7 +71,7 @@ module Lexical
 
       unless digits.include?(token[0])
         unless ('A'..'Z').include?(token[0].upcase)
-          add_error("#{line}, #{column}, Illegal symbol: #{token[i]}")
+          add_error(Error.new(line, column, "illegal symbol: #{token[i]}"))
         end
         return false
       end
@@ -81,19 +81,18 @@ module Lexical
           if token[i] == '.'
             dots += 1
             if dots == 2 && token[i - 1] != '.'
-              puts token, token[i]
-              add_error("#{line}, #{column}, Illegal symbol: #{token[i]}")
+              add_error(Error.new(line, column, "illegal symbol: #{token[i]}"))
               return false
             end
           else
-            add_error("#{line}, #{column}, Illegal symbol: #{token[i]}")
+            add_error(Error.new(line, column, "illegal symbol: #{token[i]}"))
             return false
           end
         end
         i += 1
       end
       unless (dots == 2 || dots == 0)
-        add_error("#{line}, #{column}, Uncorrect range: #{token}")
+        add_error(Error.new(line, column, "Uncorrect range: #{token}"))
         return false
       end
       true
