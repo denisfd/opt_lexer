@@ -1,13 +1,14 @@
 module Lexical
   class Lexeme
-    def initialize(code, line, column)
+    def initialize(value, code, line, column)
+      @value = value
       @code = code
       @line = line
       @column = column
     end
 
     def to_s
-      "#{@code}: (#{@line}, #{@column})"
+      "#{@code}: (#{@line}, #{@column}) => #{@value}"
     end
   end
 end

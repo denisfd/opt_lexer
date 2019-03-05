@@ -7,7 +7,7 @@ module Lexical
   def self.create(params = {})
     it = InfoTable.new
 
-    [':', ',', '.', ';'].each { |s| it.add_symbol(s) }
+    [':', ',', '.', ';', '[', ']'].each { |s| it.add_symbol(s) }
 
     [
       'PROGRAM',

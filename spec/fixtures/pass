@@ -4,8 +4,6 @@ BEGIN
   LOOP
     D:=345;
     A    :=    C[3];(* some text @@@ *)
-    :::==!@#
   ENDLOOP;
   A := C[D];
 END
-.hello
