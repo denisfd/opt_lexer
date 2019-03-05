@@ -11,17 +11,15 @@ module Lexical
     end
 
     def scan(text)
-      puts 'Scanning'
       text = text.upcase if !@config[:casesensetive]
 
       text.each_line.with_index do |line, index|
-        line = line.split.join(' ') + ' '
+        line = line.rstrip + ' '
         tokenize_line(line, index)
       end
     end
 
     def tokenize_line(line, index)
-      pp "#{index} : #{line}"
       i = 0
       column = 0
       token = ''
@@ -58,6 +56,13 @@ module Lexical
                 token = ''
                 next
               end
+              if line[i] == '.' && !(line[i + 1] == '.' || (i >= 1 && line[i-1] == '.'))
+                @infotable.recognize(token, index, i - token.length)
+                @infotable.recognize(line[i], index, i)
+                i += 1
+                token = ''
+                next
+              end
             end
             token += line[i]
           end
@@ -67,7 +72,6 @@ module Lexical
     end
 
     def report
-      puts 'Printing Tables'
       @infotable.report
     end
   end
