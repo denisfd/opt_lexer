@@ -47,7 +47,7 @@ module Lexical
       model = token.upcase
 
       symbs = 'A'..'Z'
-      digits = '1'..'9'
+      digits = '0'..'9'
 
       return false unless symbs.include?(model[0])
       i = 0
@@ -65,7 +65,7 @@ module Lexical
     end
 
     def constant?(token, line, column)
-      digits = '1'..'9'
+      digits = '0'..'9'
       i = 0
       dots = 0
 
