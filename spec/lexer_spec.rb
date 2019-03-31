@@ -81,12 +81,8 @@ describe Lexical::Lexer do
   it 'recognizes range' do
     lexer.scan('123..345')
     expect(it.errors).to be_empty
-    expect(it.constants).to include('123..345')
-  end
 
-  it 'does not recognize invalid range' do
-    lexer.scan('123..345..567')
-    expect(it.errors).not_to be_empty
-    expect(it.constants).not_to include('123..345')
+    expect(it.constants).to include('123')
+    expect(it.constants).to include('345')
   end
 end

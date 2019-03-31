@@ -6,4 +6,4 @@ BEGIN
     A    :=    C[3];(* some text @@@ *)
   ENDLOOP;
   A := C[D];
-END
+END.

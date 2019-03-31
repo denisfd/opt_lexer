@@ -67,34 +67,15 @@ module Lexical
     def constant?(token, line, column)
       digits = '0'..'9'
       i = 0
-      dots = 0
-
-      unless digits.include?(token[0])
-        unless ('A'..'Z').include?(token[0].upcase)
-          add_error(Error.new(line, column, "illegal symbol: #{token[i]}"))
-        end
-        return false
-      end
 
       while i < token.length
         unless digits.include?(token[i])
-          if token[i] == '.'
-            dots += 1
-            if dots == 2 && token[i - 1] != '.'
-              add_error(Error.new(line, column, "illegal symbol: #{token[i]}"))
-              return false
-            end
-          else
-            add_error(Error.new(line, column, "illegal symbol: #{token[i]}"))
-            return false
-          end
+          add_error(Error.new(line, column, "illegal symbol: #{token[i]}"))
+          return false
         end
         i += 1
       end
-      unless (dots == 2 || dots == 0)
-        add_error(Error.new(line, column, "Uncorrect range: #{token}"))
-        return false
-      end
+
       true
     end
 

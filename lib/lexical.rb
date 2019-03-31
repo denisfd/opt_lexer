@@ -17,6 +17,7 @@ module Lexical
       'BEGIN',
       'LOOP',
       ':=',
+      '..',
       'ENDLOOP',
       'END'
     ].each do |word|

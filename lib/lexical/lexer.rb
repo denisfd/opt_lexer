@@ -67,13 +67,25 @@ module Lexical
                 token = ''
                 next
               end
-              if line[i] == '.' && !(line[i + 1] == '.' || (i >= 1 && line[i-1] == '.'))
+              if line[i] == '.'
                 @infotable.recognize(token, index, i - token.length)
-                @infotable.recognize(line[i], index, i)
-                i += 1
+                if line[i + 1] == '.'
+                  i += 1
+                  @infotable.recognize('..', index, i)
+                else
+                  @infotable.recognize('.', index, i)
+                end
                 token = ''
+                i += 1
                 next
               end
+              # if line[i] == '.' && !(line[i + 1] == '.' || (i >= 1 && line[i-1] == '.'))
+              #   @infotable.recognize(token, index, i - token.length)
+              #   @infotable.recognize(line[i], index, i)
+              #   i += 1
+              #   token = ''
+              #   next
+              # end
             end
             token += line[i]
           end
