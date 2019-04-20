@@ -4,18 +4,21 @@ require 'clamp'
 require 'pry'
 
 require './lib/lexical'
+require './lib/syntax'
 
 class LexerCommand < Clamp::Command
   option ['-f', '--file'], 'filename', 'Input File', required: true
 
   def execute
-    parser = Lexical.create({
+    lexer = Lexical.create({
       casesensetive: false,
     })
 
-    parser.scan_file(file)
+    lexer.scan_file(file)
 
-    parser.report
+    lexer.report
+
+    syntax = Syntax.create(lexer: lexer)
   end
 end
 
