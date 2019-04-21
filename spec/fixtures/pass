@@ -1,9 +1,7 @@
 PROGRAM pr1g;
-VAR A:INTEGER; B:FLOAT; C:1..5; D:INTEGER;
+VAR a:INTEGER[1..9]; b:FLOAT;
 BEGIN
   LOOP
-    D:=345;
-    A    :=    C[3];(* some text @@@ *)
-  ENDLOOP;
-  A := C[D];
+  a := a[b[0]]
+  ENDLOOP
 END.

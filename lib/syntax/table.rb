@@ -13,17 +13,17 @@ module Syntax
         '<block>' => [
           ['<variable-declarations>', '', 'F'],
           ['BEGIN', '', 'F'],
-          ['<statement-list>', '', 'F'],
+          ['<statements-list>', '', 'F'],
           ['END', 'T', 'F']
         ],
-        '<variable-declaration>' => [
+        '<variable-declarations>' => [
           ['VAR', '', 2],
           ['<declaration-list>', 'T', 'F'],
           ['<empty>', 'T', 'T']
         ],
         '<declaration-list>' => [
           ['<declaration>', '', 'F'],
-          ['<decalration-list>', 'T', 2],
+          ['<declaration-list>', 'T', 2],
           ['<empty>', 'T', 'T']
         ],
         '<declaration>' => [
@@ -34,9 +34,9 @@ module Syntax
           [';', 'T', 'F'],
         ],
         '<attribute-list>' => [
-          ['<attribute>', '', 'F'],
+          ['<attribute>', '', 2],
           ['<attribute-list>', 'T', 2],
-          ['<empty>', 'T', 'F']
+          ['<empty>', 'T', 'T']
         ],
         '<attribute>' => [
           ['INTEGER', 'T', 1],
@@ -79,10 +79,10 @@ module Syntax
           [']', 'T', 'F'],
           ['<empty>', 'T', 'T']
         ],
-        '<variable-identifier>' => [['<identifier>']],
-        '<procedure-identifier>' => [['<identifier>']],
+        '<variable-identifier>' => [['<identifier>', 'T', 'F']],
+        '<procedure-identifier>' => [['<identifier>', 'T', 'F']],
         '<start>' => [
-          ['<signal-program>', '', 'F'],
+          ['<signal-program>', '', 'ERROR'],
           ['#', 'OK', 'ERROR']
         ]
       }

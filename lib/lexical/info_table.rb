@@ -25,16 +25,16 @@ module Lexical
       column += 1
       line += 1
       if present?(token, @symbols)
-        @lexems.push(Lexeme.new(token, @symbols[token], line, column))
+        @lexems.push(Lexeme.new(token, @symbols[token], line, column, :symbol))
       elsif present?(token, @keywords)
-        @lexems.push(Lexeme.new(token, @keywords[token], line, column))
+        @lexems.push(Lexeme.new(token, @keywords[token], line, column, :keyword))
       else
         if identifier?(token, line, column)
           add_identifier(token)
-          @lexems.push(Lexeme.new(token, @identifiers[token], line, column))
+          @lexems.push(Lexeme.new(token, @identifiers[token], line, column, :ident))
         elsif constant?(token, line, column)
           add_const(token)
-          @lexems.push(Lexeme.new(token, @constants[token], line, column))
+          @lexems.push(Lexeme.new(token, @constants[token], line, column, :const))
         end
       end
     end

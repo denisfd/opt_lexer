@@ -13,12 +13,12 @@ class LexerCommand < Clamp::Command
     lexer = Lexical.create({
       casesensetive: false,
     })
-
     lexer.scan_file(file)
-
     lexer.report
 
-    syntax = Syntax.create(lexer: lexer)
+    parser = Syntax.create(lexer: lexer)
+    puts parser.akm
+    parser.report
   end
 end
 
