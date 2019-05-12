@@ -1,4 +1,5 @@
 require './lib/syntax/table.rb'
+require './lib/syntax/tree.rb'
 
 module Syntax
   class Parser
@@ -15,7 +16,8 @@ module Syntax
     def akm
       stack = []
       index = 0
-      state = { ind: -1, rule: '<start>' }
+      @root = Node.new('root', nil)
+      state = { ind: -1, rule: '<start>', node: @root }
       address = ''
 
       while true
@@ -44,7 +46,7 @@ module Syntax
         if definition?(rule[0])
           stack.push(state)
 
-          state = { ind: -1, rule: rule[0] }
+          state = { ind: -1, rule: rule[0], node: state[:node].append(rule[0]) }
           address = ''
 
           next
@@ -52,6 +54,7 @@ module Syntax
           if rule[0][0] == '<'
             if rule[0] == '<identifier>'
               if @tokens[index].type == :ident
+                state[:node].append(rule[0]).append(@tokens[index].value)
                 index += 1
                 address = rule[1]
               else
@@ -59,6 +62,7 @@ module Syntax
               end
             elsif rule[0] == '<unsigned-integer>'
               if @tokens[index].type == :const
+                state[:node].append(rule[0]).append(@tokens[index].value)
                 index += 1
                 address = rule[1]
               else
@@ -69,6 +73,8 @@ module Syntax
             end
           else
             if @tokens[index].value == rule[0]
+              # keywords and symbs
+              state[:node].append(rule[0])
               index += 1
               address = rule[1]
             else
@@ -88,6 +94,7 @@ module Syntax
     end
 
     def report
+      @root.print
     end
   end
 end
