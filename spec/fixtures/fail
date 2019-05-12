@@ -1,9 +1,9 @@
 PROGRAM pr1g;
-VAR A:INTEGER; B:FLOAT; C:1..5; D:INTEGER;
-BEG$IN
+VAR A:INTEGER; B:FLOAT; C:FLOAT[1..5]; D:INTEGER;
+BEGIN
   LOOP
-    D?:=345;
+    D:=345;
     A    :=    C[3];(* some text @@@ *)
-  ENDLOOP;(*
+  ENDLOOP;
   A := C[D];
 END

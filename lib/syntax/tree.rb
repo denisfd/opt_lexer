@@ -18,7 +18,7 @@ module Syntax
     def print(decor = "")
       puts decor + @value
 
-      @children.each { |node| node.print(decor + " ") }
+      @children.each { |node| node.print(decor + "_") }
     end
   end
 end

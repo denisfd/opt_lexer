@@ -17,10 +17,13 @@ module Syntax
       stack = []
       index = 0
       @root = Node.new('root', nil)
+      @error = nil
       state = { ind: -1, rule: '<start>', node: @root }
       address = ''
 
       while true
+        @error = @tokens[index - 1] if address == 'ERROR'
+
         if address == 'F' || address == 'T'
           state = stack.pop
 
@@ -42,7 +45,7 @@ module Syntax
         binding.pry if @table[state[:rule]].nil?
         rule = @table[state[:rule]][state[:ind]]
 
-        pp rule
+        # pp rule
         if definition?(rule[0])
           stack.push(state)
 
@@ -94,7 +97,11 @@ module Syntax
     end
 
     def report
-      @root.print
+      if @error
+        puts "An error occured at line #{@error.line}, near synbol #{@error.value} (column #{@error.column})"
+      else
+        @root.print
+      end
     end
   end
 end
