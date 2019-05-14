@@ -57,7 +57,7 @@ module Syntax
           if rule[0][0] == '<'
             if rule[0] == '<identifier>'
               if @tokens[index].type == :ident
-                state[:node].append(rule[0]).append(@tokens[index].value)
+                state[:node].append(rule[0]).append(@tokens[index].value, true)
                 index += 1
                 address = rule[1]
               else
@@ -65,7 +65,7 @@ module Syntax
               end
             elsif rule[0] == '<unsigned-integer>'
               if @tokens[index].type == :const
-                state[:node].append(rule[0]).append(@tokens[index].value)
+                state[:node].append(rule[0]).append(@tokens[index].value, true)
                 index += 1
                 address = rule[1]
               else
@@ -77,7 +77,7 @@ module Syntax
           else
             if @tokens[index].value == rule[0]
               # keywords and symbs
-              state[:node].append(rule[0])
+              state[:node].append(rule[0], true)
               index += 1
               address = rule[1]
             else
@@ -90,9 +90,7 @@ module Syntax
 
     def definition?(str)
       return false if str[0] != '<'
-
       return false if ['<identifier>', '<unsigned-integer>', '<empty>'].include?(str)
-
       return true
     end
 
@@ -100,6 +98,7 @@ module Syntax
       if @error
         puts "An error occured at line #{@error.line}, near synbol #{@error.value} (column #{@error.column})"
       else
+        @root.finitize!
         @root.print
       end
     end

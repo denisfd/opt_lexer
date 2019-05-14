@@ -2,14 +2,15 @@ module Syntax
   class Node
     attr_reader :value, :parent, :children
 
-    def initialize(value, parent)
+    def initialize(value, parent, finite = false)
       @value = value
       @parent = parent
+      @finite = finite
       @children = []
     end
 
-    def append(value)
-      child = Node.new(value, self)
+    def append(value, finite = false)
+      child = Node.new(value, self, finite)
       @children.push child
 
       child
@@ -19,6 +20,22 @@ module Syntax
       puts decor + @value
 
       @children.each { |node| node.print(decor + "_") }
+    end
+
+    def finitize!
+      delete if !finite?
+
+      @children.each(&:finitize!)
+    end
+
+    def finite?
+      return true if @finite
+      @children.each { |c| return true if c.finite? }
+      return false
+    end
+
+    def delete
+      @parent.children.delete(self)
     end
   end
 end
