@@ -1,0 +1,16 @@
+.model small
+.stack 100h
+
+.data
+A dw 1, 2, 3, 4, 5, 6, 7, 8, 9
+B dq ?
+PR1G proc
+L0:
+mov ebx, 0
+mov ebx, B[ebx]
+mov ax, A[ebx]
+mov A, ax
+mov ax, 45
+mov B, ax
+jmp L0
+PR1G endp

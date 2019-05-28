@@ -5,6 +5,7 @@ require 'pry'
 
 require './lib/lexical'
 require './lib/syntax'
+require './lib/code'
 
 class LexerCommand < Clamp::Command
   option ['-f', '--file'], 'filename', 'Input File', required: true
@@ -19,6 +20,10 @@ class LexerCommand < Clamp::Command
     parser = Syntax.create(lexer: lexer)
     puts parser.akm
     parser.report
+
+    generator = Code.create(tree: parser.tree.children[0])
+    puts
+    generator.generate("output.txt")
   end
 end
 

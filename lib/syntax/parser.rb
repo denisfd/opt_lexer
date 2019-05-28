@@ -102,5 +102,9 @@ module Syntax
         @root.print
       end
     end
+
+    def tree
+      @root
+    end
   end
 end

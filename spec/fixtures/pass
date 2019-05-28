@@ -2,6 +2,7 @@ PROGRAM pr1g;
 VAR a:INTEGER[1..9]; b:FLOAT;
 BEGIN
   LOOP
-  a := a[b[0]];
+    a := a[b[0]];
+    b := 45;
   ENDLOOP;
 END.
